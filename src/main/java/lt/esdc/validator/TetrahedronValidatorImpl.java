@@ -1,10 +1,10 @@
 package lt.esdc.validator;
 
-import lt.esdc.action.TetrahedronCalculator;
+import lt.esdc.action.impl.TetrahedronCalculatorImpl;
 import lt.esdc.entity.Point;
 import lt.esdc.entity.Tetrahedron;
 
-public class TetrahedronValidator implements ShapeValidator<Tetrahedron> {
+public class TetrahedronValidatorImpl implements ShapeValidator<Tetrahedron> {
 
     @Override
     public boolean isValid(Tetrahedron tetrahedron) {
@@ -18,7 +18,7 @@ public class TetrahedronValidator implements ShapeValidator<Tetrahedron> {
             return false;
         }
 
-        TetrahedronCalculator calculator = new TetrahedronCalculator();
+        TetrahedronCalculatorImpl calculator = new lt.esdc.action.impl.TetrahedronCalculatorImpl();
 
         return calculator.computeVolume(tetrahedron) != 0;
     }

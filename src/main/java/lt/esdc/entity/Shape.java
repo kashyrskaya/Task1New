@@ -1,7 +1,7 @@
 package lt.esdc.entity;
 
 public abstract class Shape {
-    private final String id; //TODO: Why string?
+    private final String id;
 
     public Shape(String id) {
         this.id = id;
