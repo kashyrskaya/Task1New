@@ -1,10 +1,11 @@
-package lt.esdc.action;
+package lt.esdc.action.impl;
 
+import lt.esdc.action.ShapeCalculator;
 import lt.esdc.entity.Point;
 import lt.esdc.entity.Tetrahedron;
 import lt.esdc.util.GeometryUtil;
 
-public class TetrahedronCalculator extends ShapeCalculator<Tetrahedron> {
+public class TetrahedronCalculatorImpl implements ShapeCalculator<Tetrahedron> {
     @Override
     public double computeArea(Tetrahedron shape) {
         Point a = shape.getPointA();
