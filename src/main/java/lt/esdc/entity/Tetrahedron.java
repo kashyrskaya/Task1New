@@ -1,4 +1,4 @@
-package com.example.entity;
+package lt.esdc.entity;
 
 public class Tetrahedron extends Shape {
     private final Point pointA;

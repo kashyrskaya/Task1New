@@ -1,8 +1,8 @@
-package com.example.action;
+package lt.esdc.action;
 
-import com.example.entity.Point;
-import com.example.entity.Tetrahedron;
-import com.example.util.GeometryUtil;
+import lt.esdc.entity.Point;
+import lt.esdc.entity.Tetrahedron;
+import lt.esdc.util.GeometryUtil;
 
 public class TetrahedronCalculator extends ShapeCalculator<Tetrahedron> {
     @Override

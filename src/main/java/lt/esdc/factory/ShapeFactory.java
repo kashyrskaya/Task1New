@@ -1,7 +1,7 @@
-package com.example.factory;
+package lt.esdc.factory;
 
-import com.example.entity.Shape;
-import com.example.exception.ShapeValidationException;
+import lt.esdc.entity.Shape;
+import lt.esdc.exception.ShapeValidationException;
 
 public abstract class ShapeFactory {
     public abstract Shape createShape(String[] parameters) throws ShapeValidationException;

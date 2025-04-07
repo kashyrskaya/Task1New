@@ -1,8 +1,8 @@
-package com.example.validator;
+package lt.esdc.validator;
 
-import com.example.action.TetrahedronCalculator;
-import com.example.entity.Point;
-import com.example.entity.Tetrahedron;
+import lt.esdc.action.TetrahedronCalculator;
+import lt.esdc.entity.Point;
+import lt.esdc.entity.Tetrahedron;
 
 public class TetrahedronValidator implements ShapeValidator<Tetrahedron> {
 

@@ -1,6 +1,6 @@
-package com.example.action;
+package lt.esdc.action;
 
-import com.example.entity.Shape;
+import lt.esdc.entity.Shape;
 
 //TODO: not sure if needed, may need to revise
 public abstract class ShapeCalculator<T extends Shape> {

@@ -1,4 +1,4 @@
-package com.example.entity;
+package lt.esdc.entity;
 
 public abstract class Shape {
     private final String id; //TODO: Why string?

@@ -1,9 +1,9 @@
-package com.example.reader;
+package lt.esdc.reader;
 
-import com.example.entity.Shape;
-import com.example.exception.FileReadException;
-import com.example.factory.ShapeFactory;
-import com.example.exception.ShapeValidationException;
+import lt.esdc.entity.Shape;
+import lt.esdc.exception.FileReadException;
+import lt.esdc.factory.ShapeFactory;
+import lt.esdc.exception.ShapeValidationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

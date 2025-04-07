@@ -1,7 +1,7 @@
-package com.example.factory;
+package lt.esdc.factory;
 
-import com.example.entity.Tetrahedron;
-import com.example.exception.ShapeValidationException;
+import lt.esdc.entity.Tetrahedron;
+import lt.esdc.exception.ShapeValidationException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 

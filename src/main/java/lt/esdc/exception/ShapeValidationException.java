@@ -1,4 +1,4 @@
-package com.example.exception;
+package lt.esdc.exception;
 
 public class ShapeValidationException extends Exception {
 

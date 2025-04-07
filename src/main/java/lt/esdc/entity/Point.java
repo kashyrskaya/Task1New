@@ -1,4 +1,4 @@
-package com.example.entity;
+package lt.esdc.entity;
 
 public class Point {
     private final double x;

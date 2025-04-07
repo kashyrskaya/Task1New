@@ -1,7 +1,6 @@
-package com.example.validator;
+package lt.esdc.validator;
 
-import com.example.entity.Shape;
-import com.example.entity.Tetrahedron;
+import lt.esdc.entity.Shape;
 
 @FunctionalInterface
 public interface ShapeValidator<T extends Shape> {

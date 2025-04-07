@@ -1,6 +1,6 @@
-package com.example.util;
+package lt.esdc.util;
 
-import com.example.entity.Point;
+import lt.esdc.entity.Point;
 
 public class GeometryUtil {
 
