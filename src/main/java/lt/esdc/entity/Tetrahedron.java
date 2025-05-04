@@ -1,10 +1,10 @@
 package lt.esdc.entity;
 
 public class Tetrahedron extends Shape {
-    private final Point pointA;
-    private final Point pointB;
-    private final Point pointC;
-    private final Point pointD;
+    private  Point pointA;
+    private  Point pointB;
+    private  Point pointC;
+    private  Point pointD;
 
     public Tetrahedron(String id, Point pointA, Point pointB, Point pointC, Point pointD) {
         super(id);
@@ -18,16 +18,36 @@ public class Tetrahedron extends Shape {
         return pointA;
     }
 
+    public void setPointA(Point pointA) {
+        this.pointA = pointA;
+        notifyObservers();
+    }
+
     public Point getPointB() {
         return pointB;
+    }
+
+    public void setPointB(Point pointB) {
+        this.pointB = pointB;
+        notifyObservers();
     }
 
     public Point getPointC() {
         return pointC;
     }
 
+    public void setPointC(Point pointC) {
+        this.pointC = pointC;
+        notifyObservers();
+    }
+
     public Point getPointD() {
         return pointD;
+    }
+
+    public void setPointD(Point pointD) {
+        this.pointD = pointD;
+        notifyObservers();
     }
 
     @Override
@@ -59,6 +79,7 @@ public class Tetrahedron extends Shape {
                 .append(", pointB=").append(pointB)
                 .append(", pointC=").append(pointC)
                 .append(", pointD=").append(pointD)
+                .append(", id= ").append(getId())
                 .append('}');
 
         return sb.toString();

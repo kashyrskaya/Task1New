@@ -2,16 +2,27 @@ package lt.esdc.action.impl;
 
 import lt.esdc.action.ShapeCalculator;
 import lt.esdc.entity.Point;
+import lt.esdc.entity.Shape;
 import lt.esdc.entity.Tetrahedron;
+import lt.esdc.exception.ShapeValidationException;
 import lt.esdc.util.GeometryUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class TetrahedronCalculatorImpl implements ShapeCalculator<Tetrahedron> {
+public class TetrahedronCalculatorImpl implements ShapeCalculator {
+    private static final Logger logger = LogManager.getLogger(TetrahedronCalculatorImpl.class);
+
     @Override
-    public double computeArea(Tetrahedron shape) {
-        Point a = shape.getPointA();
-        Point b = shape.getPointB();
-        Point c = shape.getPointC();
-        Point d = shape.getPointD();
+    public double computeArea(Shape shape) throws ShapeValidationException {
+        if (!(shape instanceof Tetrahedron tetrahedron)) {
+            logger.error("Shape is not a Tetrahedron: {}", shape.getClass().getSimpleName());
+            throw new ShapeValidationException("Shape is not a Tetrahedron");
+        }
+
+        Point a = tetrahedron.getPointA();
+        Point b = tetrahedron.getPointB();
+        Point c = tetrahedron.getPointC();
+        Point d = tetrahedron.getPointD();
 
         double areaABC = GeometryUtil.computeTriangleArea(a, b, c);
         double areaABD = GeometryUtil.computeTriangleArea(a, b, d);
@@ -22,11 +33,16 @@ public class TetrahedronCalculatorImpl implements ShapeCalculator<Tetrahedron> {
     }
 
     @Override
-    public double computePerimeter(Tetrahedron shape) {
-        Point a = shape.getPointA();
-        Point b = shape.getPointB();
-        Point c = shape.getPointC();
-        Point d = shape.getPointD();
+    public double computePerimeter(Shape shape) throws ShapeValidationException {
+        if (!(shape instanceof Tetrahedron tetrahedron)) {
+            logger.error("Shape is not a Tetrahedron: {}", shape.getClass().getSimpleName());
+            throw new ShapeValidationException("Shape is not a Tetrahedron");
+        }
+
+        Point a = tetrahedron.getPointA();
+        Point b = tetrahedron.getPointB();
+        Point c = tetrahedron.getPointC();
+        Point d = tetrahedron.getPointD();
 
         double edgeAB = GeometryUtil.computeDistance(a, b);
         double edgeAC = GeometryUtil.computeDistance(a, c);
@@ -38,7 +54,13 @@ public class TetrahedronCalculatorImpl implements ShapeCalculator<Tetrahedron> {
         return edgeAB + edgeAC + edgeAD + edgeBC + edgeBD + edgeCD;
     }
 
-    public double computeVolume(Tetrahedron tetrahedron) {
+    @Override
+    public double computeVolume(Shape shape) throws ShapeValidationException {
+        if (!(shape instanceof Tetrahedron tetrahedron)) {
+            logger.error("Shape is not a Tetrahedron: {}", shape.getClass().getSimpleName());
+            throw new ShapeValidationException("Shape is not a Tetrahedron");
+        }
+
         Point a = tetrahedron.getPointA();
         Point b = tetrahedron.getPointB();
         Point c = tetrahedron.getPointC();

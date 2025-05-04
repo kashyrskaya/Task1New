@@ -1,13 +1,28 @@
 package lt.esdc.action;
 
 import lt.esdc.entity.Shape;
+import lt.esdc.exception.ShapeValidationException;
 
-//TODO: not sure if needed, may need to revise
-public interface ShapeCalculator<T extends Shape> {
+public interface ShapeCalculator {
 
-    /** For Tetrahedron and other 3D-shapes would compute area of one surface
-    **/
-    public abstract double computeArea(T shape);
+    /**
+     * Calculates the area of a shape
+     * @param shape the shape to calculate area for
+     * @return the area value
+     */
+    double computeArea(Shape shape) throws ShapeValidationException;
 
-    public abstract double computePerimeter(T shape);
+    /**
+     * Calculates the perimeter of a shape
+     * @param shape the shape to calculate perimeter for
+     * @return the perimeter value
+     */
+    double computePerimeter(Shape shape) throws ShapeValidationException;
+
+    /**
+     * Calculates the volume of a shape
+     * @param shape the shape to calculate volume for
+     * @return the volume value (for 2D shapes, returns 0)
+     */
+    double computeVolume(Shape shape) throws ShapeValidationException;
 }

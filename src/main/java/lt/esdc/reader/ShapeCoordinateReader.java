@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class ShapeDataReader {
-    private static final Logger logger = LogManager.getLogger(ShapeDataReader.class);
+public class ShapeCoordinateReader {
+    private static final Logger logger = LogManager.getLogger(ShapeCoordinateReader.class);
 
     public List<Shape> readShapesFromFile(String filePath, ShapeFactory factory) throws FileReadException {
         List<Shape> shapes = new ArrayList<>();

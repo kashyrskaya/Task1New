@@ -1,6 +1,5 @@
 package lt.esdc.validator;
 
-import lt.esdc.action.impl.TetrahedronCalculatorImpl;
 import lt.esdc.entity.Point;
 import lt.esdc.entity.Tetrahedron;
 
@@ -18,8 +17,24 @@ public class TetrahedronValidatorImpl implements ShapeValidator<Tetrahedron> {
             return false;
         }
 
-        TetrahedronCalculatorImpl calculator = new lt.esdc.action.impl.TetrahedronCalculatorImpl();
+        double ax = b.getX() - a.getX();
+        double ay = b.getY() - a.getY();
+        double az = b.getZ() - a.getZ();
 
-        return calculator.computeVolume(tetrahedron) != 0;
+        double bx = c.getX() - a.getX();
+        double by = c.getY() - a.getY();
+        double bz = c.getZ() - a.getZ();
+
+        double cx = d.getX() - a.getX();
+        double cy = d.getY() - a.getY();
+        double cz = d.getZ() - a.getZ();
+
+        double crossX = ay * bz - az * by;
+        double crossY = az * bx - ax * bz;
+        double crossZ = ax * by - ay * bx;
+
+        double volume = Math.abs(crossX * cx + crossY * cy + crossZ * cz) / 6.0;
+
+        return volume != 0;
     }
 }
