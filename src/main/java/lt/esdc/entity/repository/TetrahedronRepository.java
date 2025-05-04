@@ -3,6 +3,9 @@ package lt.esdc.entity.repository;
 import lt.esdc.action.impl.TetrahedronCalculatorImpl;
 import lt.esdc.entity.Tetrahedron;
 import lt.esdc.entity.specification.TetrahedronSpecification;
+import lt.esdc.exception.ShapeValidationException;
+import lt.esdc.validator.TetrahedronValidatorImpl;
+import lt.esdc.warehouse.Warehouse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -43,7 +46,22 @@ public class TetrahedronRepository {
      */
     public boolean add(Tetrahedron tetrahedron) {
         logger.debug("Adding tetrahedron to repository: {}", tetrahedron);
-        return tetrahedrons.add(tetrahedron);
+        TetrahedronValidatorImpl validator = new TetrahedronValidatorImpl();
+        TetrahedronCalculatorImpl calculator = new TetrahedronCalculatorImpl(validator);
+        Warehouse warehouse = Warehouse.getInstance();
+        try {
+            tetrahedrons.add(tetrahedron);
+            warehouse.putParameters(
+                    tetrahedron.getId(),
+                    calculator.computeArea(tetrahedron),
+                    calculator.computePerimeter(tetrahedron),
+                    calculator.computeVolume(tetrahedron)
+            );
+        } catch (ShapeValidationException e) {
+            logger.error("Error adding Tetrahedron to repository: {}", e.getMessage());
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -54,7 +72,15 @@ public class TetrahedronRepository {
      */
     public boolean remove(Tetrahedron tetrahedron) {
         logger.debug("Removing tetrahedron from repository: {}", tetrahedron);
-        return tetrahedrons.remove(tetrahedron);
+        boolean removed = tetrahedrons.remove(tetrahedron);
+        if (removed) {
+            Warehouse warehouse = Warehouse.getInstance();
+            warehouse.remove(tetrahedron.getId());
+            logger.debug("Tetrahedron removed successfully");
+        } else {
+            logger.warn("Tetrahedron not found in repository");
+        }
+        return removed;
     }
 
     /**

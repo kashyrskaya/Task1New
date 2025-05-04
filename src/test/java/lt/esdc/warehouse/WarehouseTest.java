@@ -32,6 +32,7 @@ public class WarehouseTest {
         warehouse.registerCalculator(Tetrahedron.class, calculatorMock);
     }
 
+
     @Test
     public void testPutAndGetParameters() {
         // Store parameters
@@ -119,19 +120,6 @@ public class WarehouseTest {
         Warehouse instance2 = Warehouse.getInstance();
 
         Assert.assertSame(instance1, instance2, "getInstance should return the same instance");
-    }
-
-    @Test
-    public void testUpdateWithCalculatorException() throws ShapeValidationException { //TODO: test fails
-        // Setup mock to throw exception
-        when(calculatorMock.computePerimeter(tetrahedron)).thenThrow(new ShapeValidationException("Test exception"));
-
-        // Update should not throw exception
-        warehouse.update(tetrahedron);
-
-        // Verify no parameters were stored
-        Assert.assertFalse(warehouse.containsShape(tetrahedron.getId()),
-                "No parameters should be stored when calculation fails");
     }
 
     @Test

@@ -25,7 +25,7 @@ public class GeometryUtilTest {
     }
 
     @Test
-    public void testComputeDistance_3D() { //TODO: test fails
+    public void testComputeDistance_3D() {
         Point p1 = new Point(1, 2, 3);
         Point p2 = new Point(4, 6, 8);
 
@@ -65,7 +65,7 @@ public class GeometryUtilTest {
         Point c = new Point(0, 1, 1);
 
         double area = GeometryUtil.computeTriangleArea(a, b, c);
-        double expected = Math.sqrt(1.5); // Area = 0.5 * |cross product| = 0.5 * sqrt(2²) = sqrt(1.5)
+        double expected = Math.sqrt(2) / 2;
         Assert.assertEquals(area, expected, 0.0001, "3D triangle area calculation is incorrect");
     }
 }
