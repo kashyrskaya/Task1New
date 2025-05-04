@@ -6,16 +6,28 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of the Observable interface for Shape objects.
+ * Allows observers to be notified of changes to a specific Shape.
+ */
 public class ShapeObservable implements Observable {
     private static final Logger logger = LogManager.getLogger(ShapeObservable.class);
 
     private final Shape shape;
     private final List<ShapeObserver> observers = new ArrayList<>();
 
+    /**
+     * Constructs a ShapeObservable for the specified Shape.
+     *
+     * @param shape the Shape to observe
+     */
     public ShapeObservable(Shape shape) {
         this.shape = shape;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addObserver(ShapeObserver observer) {
         if (!observers.contains(observer)) {
@@ -24,14 +36,20 @@ public class ShapeObservable implements Observable {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void removeObserver(ShapeObserver observer) {
-        if ((observers.remove(observer))) {
+        if (observers.remove(observer)) {
             logger.debug("Observer removed from shape: {}", shape.getId());
         }
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void notifyObservers() {
         logger.debug("Notifying {} observers for: {}", observers.size(), shape.getId());
@@ -40,6 +58,9 @@ public class ShapeObservable implements Observable {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<ShapeObserver> getObservers() {
         return new ArrayList<>(observers);

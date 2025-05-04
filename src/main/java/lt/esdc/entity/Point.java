@@ -1,15 +1,23 @@
 package lt.esdc.entity;
 
+/**
+ * Represents a point in a 3D space with x, y, and z coordinates.
+ * This class provides methods to access the coordinates,
+ * compare points for equality, calculate hash codes, and
+ * generate a string representation of the point.
+ */
 public class Point {
     private final double x;
     private final double y;
-    private double z;
+    private final double z;
 
-    public Point(double x, double y) {
-        this.x = x;
-        this.y = y;
-    }
-
+    /**
+     * Constructs a Point with the specified coordinates.
+     *
+     * @param x The x-coordinate of the point.
+     * @param y The y-coordinate of the point.
+     * @param z The z-coordinate of the point.
+     */
     public Point(double x, double y, double z) {
         this.x = x;
         this.y = y;
@@ -59,12 +67,11 @@ public class Point {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Point ");
-        sb.append(" {")
-                .append("x=").append(x)
-                .append(", y=").append(y)
-                .append(", z=").append(z)
-                .append("}");
-        return sb.toString();
+        String sb = "Point {" +
+                "x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                "}";
+        return sb;
     }
 }

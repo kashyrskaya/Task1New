@@ -3,8 +3,20 @@ package lt.esdc.validator;
 import lt.esdc.entity.Point;
 import lt.esdc.entity.Tetrahedron;
 
+/**
+ * Implementation of the ShapeValidator interface for Tetrahedron objects.
+ * Validates that the Tetrahedron is well-formed by ensuring its points are distinct
+ * and that its volume is non-zero.
+ */
 public class TetrahedronValidatorImpl implements ShapeValidator<Tetrahedron> {
 
+    /**
+     * Validates the given Tetrahedron object.
+     * Ensures that all points of the Tetrahedron are distinct and that the volume is non-zero.
+     *
+     * @param tetrahedron the Tetrahedron to validate
+     * @return true if the Tetrahedron is valid, false otherwise
+     */
     @Override
     public boolean isValid(Tetrahedron tetrahedron) {
         Point a = tetrahedron.getPointA();

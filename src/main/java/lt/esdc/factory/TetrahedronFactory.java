@@ -7,9 +7,19 @@ import lt.esdc.exception.ShapeValidationException;
 
 import java.util.UUID;
 
+/**
+ * Factory class for creating Tetrahedron objects.
+ */
 public class TetrahedronFactory extends ShapeFactory {
     private static final int REQUIRED_PARAMS = 12;
 
+    /**
+     * Creates a Tetrahedron object from the specified parameters.
+     *
+     * @param parameters an array of strings representing the coordinates of the Tetrahedron's points
+     * @return the created Tetrahedron object
+     * @throws ShapeValidationException if the parameters are invalid
+     */
     @Override
     public Shape createShape(String[] parameters) throws ShapeValidationException {
         if (parameters.length != REQUIRED_PARAMS) {
