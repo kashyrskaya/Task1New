@@ -11,7 +11,7 @@ import java.util.List;
  * Each shape has a unique identifier and supports observer notifications.
  */
 public abstract class Shape {
-    private String id;
+    private final String id;
     protected final ShapeObservable observable;
 
     /**
@@ -33,17 +33,6 @@ public abstract class Shape {
      */
     public String getId() {
         return id;
-    }
-
-    /**
-     * Sets the unique identifier of the shape and notifies observers.
-     *
-     * @param id the new unique identifier
-     */
-    public void setId(String id) {
-        String oldId = this.id;
-        this.id = id;
-        notifyObservers();
     }
 
     /**
