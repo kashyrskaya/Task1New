@@ -115,6 +115,7 @@ public class Tetrahedron extends Shape {
 
         Tetrahedron tetrahedron = (Tetrahedron) o;
 
+        if (!getId().equals(tetrahedron.getId())) return false;
         if (!pointA.equals(tetrahedron.pointA)) return false;
         if (!pointB.equals(tetrahedron.pointB)) return false;
         if (!pointC.equals(tetrahedron.pointC)) return false;
