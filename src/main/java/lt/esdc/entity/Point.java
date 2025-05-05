@@ -67,11 +67,11 @@ public class Point {
 
     @Override
     public String toString() {
-        String sb = "Point {" +
-                "x=" + x +
-                ", y=" + y +
-                ", z=" + z +
-                "}";
-        return sb;
+        StringBuilder sb = new StringBuilder("Point {");
+        sb.append("x=").append(x);
+        sb.append(", y=").append(y);
+        sb.append(", z=").append(z);
+        sb.append('}');
+        return sb.toString();
     }
 }

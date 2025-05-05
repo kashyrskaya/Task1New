@@ -142,13 +142,13 @@ public class Tetrahedron extends Shape {
      */
     @Override
     public String toString() {
-        String sb = "Tetrahedron{" +
-                "pointA=" + pointA +
-                ", pointB=" + pointB +
-                ", pointC=" + pointC +
-                ", pointD=" + pointD +
-                ", id=" + getId() +
-                '}';
-        return sb;
+        StringBuilder sb = new StringBuilder("Tetrahedron{");
+        sb.append("pointA=").append(pointA);
+        sb.append(", pointB=").append(pointB);
+        sb.append(", pointC=").append(pointC);
+        sb.append(", pointD=").append(pointD);
+        sb.append(", id=").append(getId());
+        sb.append('}');
+        return sb.toString();
     }
 }
