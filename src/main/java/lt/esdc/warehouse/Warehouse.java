@@ -213,11 +213,12 @@ public class Warehouse implements ShapeObserver {
          */
         @Override
         public String toString() {
-            return "ShapeParameters{" +
-                    "perimeter=" + perimeter +
-                    ", area=" + area +
-                    ", volume=" + volume +
-                    '}';
+            StringBuilder sb = new StringBuilder("ShapeParameters{");
+            sb.append("perimeter=").append(perimeter)
+                    .append(", area=").append(area)
+                    .append(", volume=").append(volume)
+                    .append('}');
+            return sb.toString();
         }
     }
 }
