@@ -100,7 +100,7 @@ public class TetrahedronRepository {
      * Sorts the Tetrahedrons in the repository by their ID.
      * Tetrahedrons will be sorted in ascending order based on their ID.
      */
-    public void sortByID() {
+    public void sortByID() { //TODO sortBy with Comparator
         logger.debug("Sorting tetrahedrons by ID");
         tetrahedrons.sort(Comparator.comparing(Tetrahedron::getId));
     }
