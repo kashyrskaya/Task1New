@@ -27,3 +27,14 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# Ignore target directory for Maven and Gradle
+/target/
+
+# Ignore IDE files (e.g., IntelliJ IDEA, Eclipse)
+.idea/
+*.iml
+
+# Ignore logs
+*.log
+
