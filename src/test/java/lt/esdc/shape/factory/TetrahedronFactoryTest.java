@@ -18,7 +18,7 @@ public class TetrahedronFactoryTest {
 
     @Test
     public void testCreateValidTetrahedron() throws ShapeValidationException {
-        String[] params = {"0.0", "0.0", "0.0",
+        String[] params = {"0.0", "0.0", "2.0",
                 "1.0", "0.0", "0.0",
                 "0.0", "1.0", "0.0",
                 "0.0", "0.0", "1.0"};
