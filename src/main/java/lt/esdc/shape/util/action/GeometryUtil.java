@@ -17,9 +17,9 @@ public class GeometryUtil {
      * @return the distance between the two points
      */
     public static double computeDistance(Point p1, Point p2) {
-        double dx = p2.getX() - p1.getX();
-        double dy = p2.getY() - p1.getY();
-        double dz = p2.getZ() - p1.getZ();
+        double dx = p2.x() - p1.x();
+        double dy = p2.y() - p1.y();
+        double dz = p2.z() - p1.z();
 
         return Math.sqrt(dx * dx + dy * dy + dz * dz);
     }
@@ -35,8 +35,8 @@ public class GeometryUtil {
      */
     public static double computeTriangleArea(Point a, Point b, Point c) {
 
-        Vector3D ab = new Vector3D(b.getX() - a.getX(), b.getY() - a.getY(), b.getZ() - a.getZ());
-        Vector3D ac = new Vector3D(c.getX() - a.getX(), c.getY() - a.getY(), c.getZ() - a.getZ());
+        Vector3D ab = new Vector3D(b.x() - a.x(), b.y() - a.y(), b.z() - a.z());
+        Vector3D ac = new Vector3D(c.x() - a.x(), c.y() - a.y(), c.z() - a.z());
 
         Vector3D cross = VectorUtil.cross(ab, ac);
 

@@ -3,7 +3,7 @@ package lt.esdc.shape.entity;
 /**
  * Represents a Tetrahedron defined by four points in 3D space.
  */
-public class Tetrahedron extends Shape {
+public class Tetrahedron extends AbstractShape {
     private Point pointA;
     private Point pointB;
     private Point pointC;

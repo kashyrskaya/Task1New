@@ -1,26 +1,25 @@
 package lt.esdc.shape.entity;
 
-import lt.esdc.shape.observer.ShapeObservable;
 import lt.esdc.shape.observer.ShapeObserver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Abstract base class representing a geometric shape.
  * Each shape has a unique identifier and supports observer notifications.
  */
-public abstract class Shape {
+public abstract class AbstractShape {
     private final String id;
-    protected final ShapeObservable observable;
+    private final List<ShapeObserver> observers = new ArrayList<>();
 
     /**
      * Constructs a Shape with the specified unique identifier.
      *
      * @param id the unique identifier for the shape
      */
-    public Shape(String id) {
+    public AbstractShape(String id) {
         this.id = id;
-        this.observable = new ShapeObservable(this);
     }
 
     /**
@@ -38,7 +37,7 @@ public abstract class Shape {
      * @param observer the observer to add
      */
     public void addObserver(ShapeObserver observer) {
-        observable.addObserver(observer);
+        observers.add(observer);
     }
 
     /**
@@ -47,23 +46,16 @@ public abstract class Shape {
      * @param observer the observer to remove
      */
     public void removeObserver(ShapeObserver observer) {
-        observable.removeObserver(observer);
+        observers.remove(observer);
     }
 
     /**
      * Notifies all observers of changes to the shape.
      */
     public void notifyObservers() {
-        observable.notifyObservers();
-    }
-
-    /**
-     * Gets the list of observers attached to the shape.
-     *
-     * @return the list of observers
-     */
-    public List<ShapeObserver> getObservers() {
-        return observable.getObservers();
+        for (ShapeObserver observer : observers) {
+            observer.update(this);
+        }
     }
 
     /**

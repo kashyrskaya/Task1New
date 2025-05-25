@@ -1,6 +1,6 @@
 package lt.esdc.shape.validator;
 
-import lt.esdc.shape.entity.Shape;
+import lt.esdc.shape.entity.AbstractShape;
 
 /**
  * Functional interface for validating Shape objects.
@@ -10,7 +10,7 @@ import lt.esdc.shape.entity.Shape;
  * @param <T> the type of Shape to validate
  */
 @FunctionalInterface
-public interface ShapeValidator<T extends Shape> {
+public interface ShapeValidator<T extends AbstractShape> {
 
     /**
      * Validates the given Shape object.

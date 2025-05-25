@@ -1,7 +1,7 @@
 package lt.esdc.shape.repository;
 
 import lt.esdc.shape.entity.Point;
-import lt.esdc.shape.entity.Shape;
+import lt.esdc.shape.entity.AbstractShape;
 import lt.esdc.shape.entity.Tetrahedron;
 import lt.esdc.shape.specification.impl.IdTetrahedronSpecification;
 import org.testng.Assert;
@@ -17,7 +17,7 @@ public class TetrahedronRepositoryTest {
 
     @BeforeMethod
     public void setUp() {
-        tetrahedronRepository = new TetrahedronRepository();
+        tetrahedronRepository = TetrahedronRepository.getInstance();
     }
 
     @Test
@@ -66,7 +66,7 @@ public class TetrahedronRepositoryTest {
         tetrahedronRepository.add(tetrahedron1);
         tetrahedronRepository.add(tetrahedron2);
 
-        tetrahedronRepository.sortBy(Comparator.comparing(Shape::getId));
+        tetrahedronRepository.sortBy(Comparator.comparing(AbstractShape::getId));
 
         List<Tetrahedron> sortedTetrahedrons = tetrahedronRepository.getAllTetrahedrons();
 

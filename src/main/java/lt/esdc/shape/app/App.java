@@ -1,4 +1,4 @@
-package lt.esdc.shape;
+package lt.esdc.shape.app;
 
 import lt.esdc.shape.action.impl.TetrahedronCalculatorImpl;
 import lt.esdc.shape.comparator.TetrahedronByAreaComparator;
@@ -8,7 +8,7 @@ import lt.esdc.shape.comparator.TetrahedronByVolumeComparator;
 import lt.esdc.shape.entity.Point;
 import lt.esdc.shape.entity.Tetrahedron;
 import lt.esdc.shape.exception.FileReadException;
-import lt.esdc.shape.factory.TetrahedronFactory;
+import lt.esdc.shape.factory.TetrahedronFactoryAbstract;
 import lt.esdc.shape.reader.ShapeCoordinateReader;
 import lt.esdc.shape.repository.TetrahedronRepository;
 import lt.esdc.shape.specification.TetrahedronSpecification;
@@ -24,17 +24,13 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Main application class demonstrating the tetrahedron management system.
- * This class provides a simple command-line interface to interact with the system.
- */
 public class App {
     private static final Logger logger = LogManager.getLogger(App.class);
     private static final Scanner scanner = new Scanner(System.in);
     private static TetrahedronRepository repository;
     private static TetrahedronCalculatorImpl calculator;
     private static ShapeCoordinateReader reader;
-    private static TetrahedronFactory factory;
+    private static TetrahedronFactoryAbstract factory;
     private static Warehouse warehouse;
 
     public static void main(String[] args) {
@@ -42,50 +38,37 @@ public class App {
         showMenu();
     }
 
-    /**
-     * Initialize all necessary components of the application
-     */
     private static void init() {
-        logger.info("Initializing application components");
         calculator = new TetrahedronCalculatorImpl();
-        repository = new TetrahedronRepository();
+        repository = TetrahedronRepository.getInstance();
         reader = new ShapeCoordinateReader();
-        factory = new TetrahedronFactory();
+        factory = new TetrahedronFactoryAbstract();
         warehouse = Warehouse.getInstance();
-
-        warehouse.registerCalculator(Tetrahedron.class, calculator);
-
-        logger.info("Application components initialized successfully");
     }
 
-    /**
-     * Display the main menu and handle user input
-     */
     private static void showMenu() {
         boolean exit = false;
         while (!exit) {
             System.out.println("\n--- Tetrahedron Management System ---");
             System.out.println("1. Load tetrahedrons from file");
-            System.out.println("2. Add a tetrahedron manually");
-            System.out.println("3. Display all tetrahedrons");
-            System.out.println("4. Calculate area, perimeter and volume");
-            System.out.println("5. Search tetrahedrons");
-            System.out.println("6. Sort tetrahedrons");
-            System.out.println("7. Display warehouse information");
-            System.out.println("8. Edit a tetrahedron");
+            System.out.println("2. Display all tetrahedrons");
+            System.out.println("3. Calculate area, perimeter and volume");
+            System.out.println("4. Search tetrahedrons");
+            System.out.println("5. Sort tetrahedrons");
+            System.out.println("6. Display warehouse information");
+            System.out.println("7. Edit a tetrahedron");
             System.out.println("0. Exit");
             System.out.print("Enter your choice: ");
 
             int choice = getIntInput();
             switch (choice) {
                 case 1 -> loadFromFile();
-                case 2 -> addTetrahedron();
-                case 3 -> displayAllTetrahedrons();
-                case 4 -> calculateShapeProperties();
-                case 5 -> searchTetrahedrons();
-                case 6 -> sortTetrahedrons();
-                case 7 -> displayWarehouseInfo();
-                case 8 -> editTetrahedron();
+                case 2 -> displayAllTetrahedrons();
+                case 3 -> calculateShapeProperties();
+                case 4 -> searchTetrahedrons();
+                case 5 -> sortTetrahedrons();
+                case 6 -> displayWarehouseInfo();
+                case 7 -> editTetrahedron();
                 case 0 -> exit = true;
                 default -> System.out.println("Invalid choice. Please try again.");
             }
@@ -93,9 +76,6 @@ public class App {
         logger.info("Application terminated");
     }
 
-    /**
-     * Load tetrahedrons from a file
-     */
     private static void loadFromFile() {
         System.out.print("Enter file path: ");
         String filePath = scanner.nextLine();
@@ -118,46 +98,6 @@ public class App {
         }
     }
 
-    /**
-     * Add a tetrahedron manually
-     */
-    private static void addTetrahedron() {
-        try {
-            System.out.println("Enter coordinates for point A (x y z):");
-            Point pointA = readPoint();
-
-            System.out.println("Enter coordinates for point B (x y z):");
-            Point pointB = readPoint();
-
-            System.out.println("Enter coordinates for point C (x y z):");
-            Point pointC = readPoint();
-
-            System.out.println("Enter coordinates for point D (x y z):");
-            Point pointD = readPoint();
-
-            System.out.println("Enter ID for the tetrahedron:");
-            String id = scanner.nextLine();
-
-            Tetrahedron tetrahedron = new Tetrahedron(id, pointA, pointB, pointC, pointD);
-
-            TetrahedronValidatorImpl validator = new TetrahedronValidatorImpl();
-            if (!validator.isValid(tetrahedron)) {
-                System.out.println("Invalid tetrahedron. The points may be coplanar or overlapping.");
-                return;
-            }
-
-            repository.add(tetrahedron);
-            System.out.println("Tetrahedron added successfully with ID: " + id);
-            logger.info("Manually added tetrahedron with ID: {}", id);
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid input format. Please enter numeric values.");
-            logger.error("Invalid input format for manual tetrahedron creation: {}", e.getMessage());
-        }
-    }
-
-    /**
-     * Read a point from user input
-     */
     private static Point readPoint() {
         String[] coordinates = scanner.nextLine().split("\\s+");
         if (coordinates.length != 3) {
@@ -171,9 +111,6 @@ public class App {
         return new Point(x, y, z);
     }
 
-    /**
-     * Display all tetrahedrons in the repository
-     */
     private static void displayAllTetrahedrons() {
         List<Tetrahedron> tetrahedrons = repository.getAllTetrahedrons();
 
@@ -189,9 +126,6 @@ public class App {
         System.out.println("Total: " + tetrahedrons.size() + " tetrahedrons");
     }
 
-    /**
-     * Calculate and display area, perimeter, and volume for a tetrahedron
-     */
     private static void calculateShapeProperties() {
         System.out.println("Enter tetrahedron ID:");
         String id = scanner.nextLine();
@@ -218,9 +152,6 @@ public class App {
 
     }
 
-    /**
-     * Search tetrahedrons based on criteria
-     */
     private static void searchTetrahedrons() {
         System.out.println("\n--- Search Tetrahedrons ---");
         System.out.println("1. Search by ID");
@@ -279,9 +210,6 @@ public class App {
         System.out.println("Total: " + results.size() + " tetrahedrons found");
     }
 
-    /**
-     * Sort tetrahedrons by different criteria
-     */
     private static void sortTetrahedrons() {
         System.out.println("\n--- Sort Tetrahedrons ---");
         System.out.println("1. Sort by ID");
@@ -307,34 +235,35 @@ public class App {
         displayAllTetrahedrons();
     }
 
-    /**
-     * Display warehouse information for a tetrahedron
-     */
     private static void displayWarehouseInfo() {
         System.out.println("Enter tetrahedron ID:");
         String id = scanner.nextLine();
-
-        if (!warehouse.containsShape(id)) {
-            System.out.println("No information found in warehouse for ID: " + id);
-            return;
-        }
 
         Warehouse.ShapeParameters parameters = warehouse.getParameters(id);
 
         System.out.println("\n--- Warehouse Information ---");
         System.out.println("ID: " + id);
-        System.out.println("Area: " + parameters.getArea());
-        System.out.println("Perimeter: " + parameters.getPerimeter());
-        System.out.println("Volume: " + parameters.getVolume());
+        System.out.println("Area: " + parameters.area());
+        System.out.println("Perimeter: " + parameters.perimeter());
+        System.out.println("Volume: " + parameters.volume());
     }
-
-    /**
-     * Edit a tetrahedron in the repository
-     */
 
     private static void editTetrahedron() {
         System.out.print("Enter Tetrahedron ID to update: ");
         String id = scanner.nextLine();
+        TetrahedronSpecification specification = new IdTetrahedronSpecification(id);
+
+        List<Tetrahedron> result = repository.query(specification);
+        if (result.isEmpty()) {
+            System.out.println("Tetrahedron not found.");
+            return;
+        }
+        Tetrahedron tetrahedron = result.get(0);
+        if (tetrahedron == null) {
+            System.out.println("Tetrahedron not found.");
+            logger.warn("Tetrahedron with ID {} not found.", id);
+            return;
+        }
 
         System.out.print("Which point do you want to update? (A, B, C, D): ");
         String labelInput = scanner.nextLine().trim().toUpperCase();
@@ -353,19 +282,44 @@ public class App {
             return;
         }
 
-        boolean updated = repository.updatePoint(id, pointLabel, newPoint);
-        if (updated) {
-            System.out.println("Tetrahedron point updated successfully.");
-            logger.info("Updated point {} of tetrahedron {}", pointLabel, id);
-        } else {
-            System.out.println("Tetrahedron not found or update failed.");
-            logger.warn("Failed to update point {} of tetrahedron {}", pointLabel, id);
+        Point originalPoint;
+        switch (pointLabel) {
+            case 'A' -> {
+                originalPoint = tetrahedron.getPointA();
+                tetrahedron.setPointA(newPoint);
+            }
+            case 'B' -> {
+                originalPoint = tetrahedron.getPointB();
+                tetrahedron.setPointB(newPoint);
+            }
+            case 'C' -> {
+                originalPoint = tetrahedron.getPointC();
+                tetrahedron.setPointC(newPoint);
+            }
+            case 'D' -> {
+                originalPoint = tetrahedron.getPointD();
+                tetrahedron.setPointD(newPoint);
+            }
+            default -> {
+                System.out.println("Invalid point label.");
+                return;
+            }
+        }
+
+        TetrahedronValidatorImpl validator = new TetrahedronValidatorImpl();
+        if (!validator.isValid(tetrahedron)) {
+            // Rollback
+            switch (pointLabel) {
+                case 'A' -> tetrahedron.setPointA(originalPoint);
+                case 'B' -> tetrahedron.setPointB(originalPoint);
+                case 'C' -> tetrahedron.setPointC(originalPoint);
+                case 'D' -> tetrahedron.setPointD(originalPoint);
+            }
+            System.out.println("Update failed: resulting tetrahedron is invalid.");
+            logger.warn("Rollback: invalid tetrahedron after updating point {}", pointLabel);
         }
     }
 
-    /**
-     * Get integer input from the user
-     */
     private static int getIntInput() {
         try {
             return Integer.parseInt(scanner.nextLine());
@@ -374,9 +328,6 @@ public class App {
         }
     }
 
-    /**
-     * Get double input from the user
-     */
     private static double getDoubleInput() {
         try {
             return Double.parseDouble(scanner.nextLine());

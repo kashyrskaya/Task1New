@@ -6,11 +6,7 @@ package lt.esdc.shape.entity;
  * compare points for equality, calculate hash codes, and
  * generate a string representation of the point.
  */
-public class Point {
-    private final double x;
-    private final double y;
-    private final double z;
-
+public record Point(double x, double y, double z) {
     /**
      * Constructs a Point with the specified coordinates.
      *
@@ -18,22 +14,7 @@ public class Point {
      * @param y The y-coordinate of the point.
      * @param z The z-coordinate of the point.
      */
-    public Point(double x, double y, double z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public double getZ() {
-        return z;
+    public Point {
     }
 
     @Override

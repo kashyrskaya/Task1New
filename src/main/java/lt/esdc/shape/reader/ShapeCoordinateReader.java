@@ -1,9 +1,9 @@
 package lt.esdc.shape.reader;
 
-import lt.esdc.shape.entity.Shape;
+import lt.esdc.shape.entity.AbstractShape;
 import lt.esdc.shape.entity.Tetrahedron;
 import lt.esdc.shape.exception.FileReadException;
-import lt.esdc.shape.factory.ShapeFactory;
+import lt.esdc.shape.factory.AbstractShapeFactory;
 import lt.esdc.shape.exception.ShapeValidationException;
 import lt.esdc.shape.validator.TetrahedronValidatorImpl;
 import org.apache.logging.log4j.LogManager;
@@ -16,12 +16,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+/**
+ * Class responsible for reading shape coordinates from a file and validating them.
+ * It uses a ShapeFactory to create Shape instances and a TetrahedronValidatorImpl to validate Tetrahedrons.
+ */
+
 public class ShapeCoordinateReader {
     private static final Logger logger = LogManager.getLogger(ShapeCoordinateReader.class);
     private static final TetrahedronValidatorImpl validator = new TetrahedronValidatorImpl();
 
-    public List<Shape> readShapesFromFile(String filePath, ShapeFactory factory) throws FileReadException {
-        List<Shape> shapes = new ArrayList<>();
+    public List<AbstractShape> readShapesFromFile(String filePath, AbstractShapeFactory factory) throws FileReadException {
+        List<AbstractShape> shapes = new ArrayList<>();
 
         try (Stream<String> lines = Files.lines(Paths.get(filePath))) {
             List<String> filteredLines = lines
@@ -31,10 +36,10 @@ public class ShapeCoordinateReader {
             for (String line : filteredLines) {
                 try {
                     String[] parameters = line.split("\\s+");
-                    Shape shape = factory.createShape(parameters);
-                    if (validator.isValid((Tetrahedron) shape)){
-                        shapes.add(shape);
-                        logger.info("Shape created: {}", shape.toString());
+                    AbstractShape abstractShape = factory.createShape(parameters);
+                    if (validator.isValid((Tetrahedron) abstractShape)){
+                        shapes.add(abstractShape);
+                        logger.info("Shape created: {}", abstractShape.toString());
                     } else {
                         logger.error("Invalid shape data: {}", line);
                         throw new ShapeValidationException("Invalid shape data: " + line);

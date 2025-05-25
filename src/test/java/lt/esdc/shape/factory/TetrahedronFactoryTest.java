@@ -9,11 +9,11 @@ import static org.testng.Assert.assertNotNull;
 
 public class TetrahedronFactoryTest {
 
-    private TetrahedronFactory factory;
+    private TetrahedronFactoryAbstract factory;
 
     @BeforeClass
     public void setUp() {
-        factory = new TetrahedronFactory();
+        factory = new TetrahedronFactoryAbstract();
     }
 
     @Test

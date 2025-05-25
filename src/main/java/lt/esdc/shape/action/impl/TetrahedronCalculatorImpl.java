@@ -1,8 +1,8 @@
 package lt.esdc.shape.action.impl;
 
 import lt.esdc.shape.action.ShapeCalculator;
+import lt.esdc.shape.entity.AbstractShape;
 import lt.esdc.shape.entity.Point;
-import lt.esdc.shape.entity.Shape;
 import lt.esdc.shape.entity.Tetrahedron;
 import lt.esdc.shape.util.action.GeometryUtil;
 import lt.esdc.shape.util.action.VectorUtil;
@@ -21,12 +21,12 @@ public class TetrahedronCalculatorImpl implements ShapeCalculator {
      * Computes the surface area of the given Tetrahedron.
      * The area is calculated by summing the areas of the four triangular faces of the Tetrahedron.
      *
-     * @param shape The shape (Tetrahedron) for which the area is to be computed.
+     * @param abstractShape The shape (Tetrahedron) for which the area is to be computed.
      * @return The surface area of the Tetrahedron.
      */
     @Override
-    public double computeArea(Shape shape) {
-        Tetrahedron tetrahedron = (Tetrahedron) shape;
+    public double computeArea(AbstractShape abstractShape) {
+        Tetrahedron tetrahedron = (Tetrahedron) abstractShape;
 
         Point a = tetrahedron.getPointA();
         Point b = tetrahedron.getPointB();
@@ -49,12 +49,12 @@ public class TetrahedronCalculatorImpl implements ShapeCalculator {
      * Computes the perimeter of the given Tetrahedron.
      * The perimeter is calculated by summing the lengths of the six edges of the Tetrahedron.
      *
-     * @param shape The shape (Tetrahedron) for which the perimeter is to be computed.
+     * @param abstractShape The shape (Tetrahedron) for which the perimeter is to be computed.
      * @return The perimeter of the Tetrahedron.
      */
     @Override
-    public double computePerimeter(Shape shape) {
-        Tetrahedron tetrahedron = (Tetrahedron) shape;
+    public double computePerimeter(AbstractShape abstractShape) {
+        Tetrahedron tetrahedron = (Tetrahedron) abstractShape;
 
         Point a = tetrahedron.getPointA();
         Point b = tetrahedron.getPointB();
@@ -75,21 +75,21 @@ public class TetrahedronCalculatorImpl implements ShapeCalculator {
      * Computes the volume of the given Tetrahedron using the determinant method for a tetrahedron's volume.
      * The volume is computed using the scalar triple product of vectors formed by the Tetrahedron's points.
      *
-     * @param shape The shape (Tetrahedron) for which the volume is to be computed.
+     * @param abstractShape The shape (Tetrahedron) for which the volume is to be computed.
      * @return The volume of the Tetrahedron.
      */
     @Override
-    public double computeVolume(Shape shape) {
-        Tetrahedron tetrahedron = (Tetrahedron) shape;
+    public double computeVolume(AbstractShape abstractShape) {
+        Tetrahedron tetrahedron = (Tetrahedron) abstractShape;
 
         Point a = tetrahedron.getPointA();
         Point b = tetrahedron.getPointB();
         Point c = tetrahedron.getPointC();
         Point d = tetrahedron.getPointD();
 
-        Vector3D ab = new Vector3D(b.getX() - a.getX(), b.getY() - a.getY(), b.getZ() - a.getZ());
-        Vector3D ac = new Vector3D(c.getX() - a.getX(), c.getY() - a.getY(), c.getZ() - a.getZ());
-        Vector3D ad = new Vector3D(d.getX() - a.getX(), d.getY() - a.getY(), d.getZ() - a.getZ());
+        Vector3D ab = new Vector3D(b.x() - a.x(), b.y() - a.y(), b.z() - a.z());
+        Vector3D ac = new Vector3D(c.x() - a.x(), c.y() - a.y(), c.z() - a.z());
+        Vector3D ad = new Vector3D(d.x() - a.x(), d.y() - a.y(), d.z() - a.z());
 
         Vector3D cross = VectorUtil.cross(ac, ad);
 

@@ -7,6 +7,10 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Comparator;
 
+/**
+ * Comparator for Tetrahedron objects based on their surface area.
+ * This class uses TetrahedronCalculatorImpl to compute the area of the Tetrahedrons.
+ */
 public class TetrahedronByVolumeComparator implements Comparator<Tetrahedron> {
     private final TetrahedronCalculatorImpl calculator;
     private static final Logger logger = LogManager.getLogger(TetrahedronByVolumeComparator.class);

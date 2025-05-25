@@ -1,6 +1,6 @@
 package lt.esdc.shape.observer;
 
-import lt.esdc.shape.entity.Shape;
+import lt.esdc.shape.entity.AbstractShape;
 
 /**
  * Interface for observers in the observer design pattern.
@@ -11,7 +11,7 @@ public interface ShapeObserver {
     /**
      * Called when the observed Shape is updated.
      *
-     * @param shape the updated Shape
+     * @param abstractShape the updated Shape
      */
-    void update(Shape shape);
+    void update(AbstractShape abstractShape);
 }

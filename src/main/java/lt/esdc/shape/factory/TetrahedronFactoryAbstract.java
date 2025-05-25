@@ -1,7 +1,7 @@
 package lt.esdc.shape.factory;
 
 import lt.esdc.shape.entity.Point;
-import lt.esdc.shape.entity.Shape;
+import lt.esdc.shape.entity.AbstractShape;
 import lt.esdc.shape.entity.Tetrahedron;
 import lt.esdc.shape.exception.ShapeValidationException;
 
@@ -10,7 +10,7 @@ import java.util.UUID;
 /**
  * Factory class for creating Tetrahedron objects.
  */
-public class TetrahedronFactory extends ShapeFactory {
+public class TetrahedronFactoryAbstract extends AbstractShapeFactory {
     private static final int REQUIRED_PARAMS = 12;
 
     /**
@@ -21,7 +21,7 @@ public class TetrahedronFactory extends ShapeFactory {
      * @throws ShapeValidationException if the parameters are invalid
      */
     @Override
-    public Shape createShape(String[] parameters) throws ShapeValidationException {
+    public AbstractShape createShape(String[] parameters) throws ShapeValidationException {
         if (parameters.length != REQUIRED_PARAMS) {
             throw new ShapeValidationException("Invalid number of parameters for tetrahedron: " + parameters.length);
         }
