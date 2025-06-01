@@ -8,8 +8,9 @@ import lt.esdc.shape.comparator.TetrahedronByVolumeComparator;
 import lt.esdc.shape.entity.Point;
 import lt.esdc.shape.entity.Tetrahedron;
 import lt.esdc.shape.exception.FileReadException;
-import lt.esdc.shape.factory.TetrahedronFactoryAbstract;
-import lt.esdc.shape.reader.ShapeCoordinateReader;
+import lt.esdc.shape.exception.ShapeValidationException;
+import lt.esdc.shape.factory.TetrahedronFactory;
+import lt.esdc.shape.loader.impl.TetrahedronLoader;
 import lt.esdc.shape.repository.TetrahedronRepository;
 import lt.esdc.shape.specification.TetrahedronSpecification;
 import lt.esdc.shape.specification.impl.AreaRangeTetrahedronSpecification;
@@ -29,8 +30,7 @@ public class App {
     private static final Scanner scanner = new Scanner(System.in);
     private static TetrahedronRepository repository;
     private static TetrahedronCalculatorImpl calculator;
-    private static ShapeCoordinateReader reader;
-    private static TetrahedronFactoryAbstract factory;
+    private static TetrahedronFactory factory;
     private static Warehouse warehouse;
 
     public static void main(String[] args) {
@@ -41,8 +41,7 @@ public class App {
     private static void init() {
         calculator = new TetrahedronCalculatorImpl();
         repository = TetrahedronRepository.getInstance();
-        reader = new ShapeCoordinateReader();
-        factory = new TetrahedronFactoryAbstract();
+        factory = new TetrahedronFactory();
         warehouse = Warehouse.getInstance();
     }
 
@@ -77,24 +76,20 @@ public class App {
     }
 
     private static void loadFromFile() {
+        TetrahedronLoader processor = new TetrahedronLoader(factory);
         System.out.print("Enter file path: ");
         String filePath = scanner.nextLine();
 
         try {
-            List<Tetrahedron> tetrahedrons = reader.readShapesFromFile(filePath, factory)
-                    .stream()
-                    .map(shape -> (Tetrahedron) shape)
-                    .toList();
-
-            for (Tetrahedron tetrahedron : tetrahedrons) {
-                repository.add(tetrahedron);
-            }
+            List<Tetrahedron> tetrahedrons = processor.loadShapesFromFile(filePath);
 
             System.out.println("Successfully loaded " + tetrahedrons.size() + " tetrahedrons");
             logger.info("Loaded {} tetrahedrons from file: {}", tetrahedrons.size(), filePath);
         } catch (FileReadException e) {
             System.out.println("Error reading file: " + e.getMessage());
             logger.error("Error reading file: {}", e.getMessage());
+        } catch (ShapeValidationException e) {
+            logger.info("Invalid tetrahedron found in file: {}", e.getMessage());
         }
     }
 
@@ -239,13 +234,17 @@ public class App {
         System.out.println("Enter tetrahedron ID:");
         String id = scanner.nextLine();
 
-        Warehouse.ShapeParameters parameters = warehouse.getParameters(id);
+        try {
+            Warehouse.ShapeParameters parameters = warehouse.getParameters(id);
 
-        System.out.println("\n--- Warehouse Information ---");
-        System.out.println("ID: " + id);
-        System.out.println("Area: " + parameters.area());
-        System.out.println("Perimeter: " + parameters.perimeter());
-        System.out.println("Volume: " + parameters.volume());
+            System.out.println("\n--- Warehouse Information ---");
+            System.out.println("ID: " + id);
+            System.out.println("Area: " + parameters.area());
+            System.out.println("Perimeter: " + parameters.perimeter());
+            System.out.println("Volume: " + parameters.volume());
+        } catch (NullPointerException e) {
+            logger.warn("Tetrahedron with ID {} not found in warehouse.", id);
+        }
     }
 
     private static void editTetrahedron() {

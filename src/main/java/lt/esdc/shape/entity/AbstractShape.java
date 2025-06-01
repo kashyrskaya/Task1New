@@ -1,5 +1,6 @@
 package lt.esdc.shape.entity;
 
+import lt.esdc.shape.observer.ShapeObservable;
 import lt.esdc.shape.observer.ShapeObserver;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
  * Abstract base class representing a geometric shape.
  * Each shape has a unique identifier and supports observer notifications.
  */
-public abstract class AbstractShape {
+public abstract class AbstractShape implements ShapeObservable {
     private final String id;
     private final List<ShapeObserver> observers = new ArrayList<>();
 
