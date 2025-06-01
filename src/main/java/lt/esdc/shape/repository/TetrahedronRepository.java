@@ -1,7 +1,7 @@
 package lt.esdc.shape.repository;
 
 import lt.esdc.shape.entity.Tetrahedron;
-import lt.esdc.shape.observer.WarehouseObserver;
+import lt.esdc.shape.observer.impl.WarehouseObserver;
 import lt.esdc.shape.specification.TetrahedronSpecification;
 import lt.esdc.shape.warehouse.Warehouse;
 import org.apache.logging.log4j.LogManager;
@@ -29,15 +29,10 @@ public class TetrahedronRepository {
     }
 
     public boolean add(Tetrahedron tetrahedron) {
-        try {
-            tetrahedron.addObserver(observer);
-            tetrahedrons.add(tetrahedron);
-            logger.debug("Tetrahedron added successfully and registered with warehouse");
-            return true;
-        } catch (Exception e) {
-            logger.error("Error adding Tetrahedron to repository: {}", e.getMessage());
-            return false;
-        }
+        tetrahedron.addObserver(observer);
+        tetrahedrons.add(tetrahedron);
+        logger.info("Tetrahedron added successfully and registered with warehouse");
+        return true;
     }
 
     /**

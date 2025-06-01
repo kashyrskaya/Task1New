@@ -1,8 +1,9 @@
-package lt.esdc.shape.observer;
+package lt.esdc.shape.observer.impl;
 
 import lt.esdc.shape.action.CalculatorFactory;
 import lt.esdc.shape.action.ShapeCalculator;
 import lt.esdc.shape.entity.AbstractShape;
+import lt.esdc.shape.observer.ShapeObserver;
 import lt.esdc.shape.warehouse.Warehouse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,12 +15,16 @@ import org.apache.logging.log4j.Logger;
 
 public class WarehouseObserver implements ShapeObserver {
     private static final Logger logger = LogManager.getLogger(WarehouseObserver.class);
-    private final Warehouse warehouse = Warehouse.getInstance();
 
     @Override
     public void update(AbstractShape abstractShape) {
+        Warehouse warehouse = Warehouse.getInstance();
         ShapeCalculator calculator = CalculatorFactory.getCalculator(abstractShape);
-        warehouse.putParameters(abstractShape.getId(), calculator.computePerimeter(abstractShape), calculator.computeArea(abstractShape), calculator.computeVolume(abstractShape));
+        String shapeId = abstractShape.getId();
+        double shapePerimeter = calculator.computePerimeter(abstractShape);
+        double shapeArea = calculator.computeArea(abstractShape);
+        double shapeVolume = calculator.computeVolume(abstractShape);
+        warehouse.putParameters(shapeId, shapePerimeter, shapeArea, shapeVolume);
         logger.info("Warehouse updated shape {}", abstractShape);
     }
 }

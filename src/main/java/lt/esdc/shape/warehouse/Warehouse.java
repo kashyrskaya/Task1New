@@ -23,15 +23,11 @@ public class Warehouse {
     public void putParameters(String shapeId, double perimeter, double area, double volume) {
         ShapeParameters parameters = new ShapeParameters(perimeter, area, volume);
         parametersMap.put(shapeId, parameters);
-        logger.debug("Parameters for shape {} saved: {}", shapeId, parameters);
+        logger.info("Parameters for shape {} saved: {}", shapeId, parameters);
     }
 
     public ShapeParameters getParameters(String shapeId) {
-        ShapeParameters parameters = parametersMap.get(shapeId);
-        if (parameters == null) {
-            logger.warn("No parameters found for shape {}", shapeId);
-        }
-        return parameters;
+        return parametersMap.get(shapeId);
     }
 
     public void remove(String shapeId) {
@@ -40,21 +36,6 @@ public class Warehouse {
     }
 
         public record ShapeParameters(double perimeter, double area, double volume) {
-
-            @Override
-            public double perimeter() {
-                return perimeter;
-            }
-
-            @Override
-            public double area() {
-                return area;
-            }
-
-            @Override
-            public double volume() {
-                return volume;
-            }
 
             @Override
             public String toString() {
