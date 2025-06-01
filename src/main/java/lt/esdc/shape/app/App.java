@@ -234,13 +234,17 @@ public class App {
         System.out.println("Enter tetrahedron ID:");
         String id = scanner.nextLine();
 
-        Warehouse.ShapeParameters parameters = warehouse.getParameters(id);
+        try {
+            Warehouse.ShapeParameters parameters = warehouse.getParameters(id);
 
-        System.out.println("\n--- Warehouse Information ---");
-        System.out.println("ID: " + id);
-        System.out.println("Area: " + parameters.area());
-        System.out.println("Perimeter: " + parameters.perimeter());
-        System.out.println("Volume: " + parameters.volume());
+            System.out.println("\n--- Warehouse Information ---");
+            System.out.println("ID: " + id);
+            System.out.println("Area: " + parameters.area());
+            System.out.println("Perimeter: " + parameters.perimeter());
+            System.out.println("Volume: " + parameters.volume());
+        } catch (NullPointerException e) {
+            logger.warn("Tetrahedron with ID {} not found in warehouse.", id);
+        }
     }
 
     private static void editTetrahedron() {
